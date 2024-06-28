@@ -10,7 +10,8 @@ public enum WordType {
     PRAPOSITION("Präposition"),
     KONJUNKTION("Konjunktion"),
     INTERJEKTION("Interjektion"),
-    ZAHLWORT("Zahlwört");
+    ZAHLWORT("Zahlwört"),
+    AUSDRUCK("Ausdruck");
 
     private final String type;
 
