@@ -11,7 +11,8 @@ public class TitleLabel extends JLabel {
         super(title);
         try  (InputStream input = TitleLabel.class.getClassLoader().getResourceAsStream("Fonts/RobotoMono.ttf")){
             Font fnt = Font.createFont(Font.TRUETYPE_FONT, input);
-            setFont(Font.getFont(Font.MONOSPACED));
+            Font sized = fnt.deriveFont(35f).deriveFont(Font.BOLD);
+            setFont(sized);
             System.out.println(fnt.getClass());
         } catch (IOException e) {
             System.out.println("anyadat");

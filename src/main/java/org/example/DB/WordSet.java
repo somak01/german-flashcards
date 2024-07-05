@@ -25,29 +25,41 @@ public class WordSet {
     }
 
     public static List<Word> getVerbs() {
+        return getType(WordType.VERB);
+    }
+    public static List<Word> getSubtantiv() {
+        return getType(WordType.SUBSTANTIV);
+    }
+    public static List<Word> getAdjektiv() {
+        return getType(WordType.ADJEKTIV);
+    }
+    public static List<Word> getArtikel() {
+        return getType(WordType.ARTIKEL);
+    }
+    private static List<Word> getType(WordType type) {
         try {
-             List<Word> ret = new ArrayList<>();
-             ResultSet result = stmt.executeQuery("""
+            List<Word> ret = new ArrayList<>();
+            ResultSet result = stmt.executeQuery(String.format("""
                     SELECT * FROM words
                     INNER JOIN word_types ON words.word_type_id = word_types.id
-                    WHERE word_types.type_name = 'Verb';
-                    """);
-             while (result.next()) {
-
-                 ret.add(new Word(result.getInt("id"),
-                 result.getString("german"),
-                 result.getString("hungarian"),
-                 null,
-                 result.getString("type_name")));
-             }
-             return ret;
+                    LEFT JOIN themes ON words.theme_id = themes.id
+                    WHERE word_types.type_name = '%s';
+                    """, type.getType()));
+            while (result.next()) {
+                ret.add(new Word(result.getInt("id"),
+                        result.getString("german"),
+                        result.getString("hungarian"),
+                        result.getString("theme_name"),
+                        result.getString("type_name")));
+            }
+            System.out.println(ret);
+            return ret;
         } catch (SQLException exp) {
             System.out.println("Error with the sql connection or the statement");
             System.out.println(exp.getMessage());
             return null;
         }
     }
-
 
     public static void main(String[] args) {
         List<Word> verbs = WordSet.getVerbs();
