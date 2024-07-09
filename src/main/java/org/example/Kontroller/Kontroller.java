@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Kontroller;
 
 import org.example.GUI.GameMenu;
 import org.example.GUI.MainMenu;
@@ -16,4 +16,13 @@ public class Kontroller {
             this.settings = settings;
         } else throw new NullPointerException("One of Kontroller's argument is null");
     }
+
+    public void configure() {
+        main.setExitListener(e -> System.exit(0));
+        main.setPlayListener(e -> {main.setVisible(false);game.setVisible(true);});
+        main.setSettingsListener(e -> {main.setVisible(false);settings.setVisible(true);});
+        settings.setBackBtnActionListener(e -> {settings.setVisible(false);main.setVisible(true);});
+    }
+
+
 }

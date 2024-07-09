@@ -1,9 +1,5 @@
 package org.example.GUI;
 
-import org.example.DB.WordSet;
-import org.example.Kontroller;
-import org.example.MODEL.Word;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,6 +11,7 @@ public class MainFrame extends JFrame {
     private final GridBagConstraints constraints = new GridBagConstraints();
     public MainFrame() {
         setSize(1000, 1000);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(125, 252, 225));
         setLayout(layout);
         GridBagConstraints gbc = new GridBagConstraints();

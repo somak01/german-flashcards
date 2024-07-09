@@ -7,6 +7,6 @@ import java.awt.event.KeyListener;
 
 public class NextButton extends JButton {
     public NextButton() {
-        super();
+        super("Next");
     }
 }

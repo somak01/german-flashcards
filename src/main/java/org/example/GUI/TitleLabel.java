@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class TitleLabel extends JLabel {
-
+    public TitleLabel() {
+        this("");
+    }
     public TitleLabel(String title) {
         super(title);
         try  (InputStream input = TitleLabel.class.getClassLoader().getResourceAsStream("Fonts/RobotoMono.ttf")){
@@ -21,7 +23,6 @@ public class TitleLabel extends JLabel {
         }
 
     }
-
     public static void main(String[] args) {
         new TitleLabel("asd");
     }

@@ -1,6 +1,6 @@
 package org.example.GUI;
 
-import org.example.Kontroller;
+import org.example.Kontroller.Kontroller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +17,7 @@ public class ContentPanel extends JPanel {
         setMinimumSize(size);
         setPreferredSize(size);
         setLayout(cLayout);
+        kontroller.configure();
         add(main, "main");
         add(game, "game");
         add(settings, "settings");
