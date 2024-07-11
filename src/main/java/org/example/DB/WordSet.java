@@ -52,7 +52,6 @@ public class WordSet {
                         result.getString("theme_name"),
                         result.getString("type_name")));
             }
-            System.out.println(ret);
             return ret;
         } catch (SQLException exp) {
             System.out.println("Error with the sql connection or the statement");

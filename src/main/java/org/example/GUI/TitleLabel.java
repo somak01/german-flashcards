@@ -15,15 +15,13 @@ public class TitleLabel extends JLabel {
             Font fnt = Font.createFont(Font.TRUETYPE_FONT, input);
             Font sized = fnt.deriveFont(35f).deriveFont(Font.BOLD);
             setFont(sized);
-            System.out.println(fnt.getClass());
         } catch (IOException e) {
-            System.out.println("anyadat");
+            System.err.println("valami baj van a filelal");
+            System.exit(1);
         } catch (FontFormatException fe) {
-            System.out.println("faszom geci");
+            System.err.println("Valami baj van a font formattal");
+            System.exit(1);
         }
 
-    }
-    public static void main(String[] args) {
-        new TitleLabel("asd");
     }
 }
