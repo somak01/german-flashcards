@@ -6,13 +6,13 @@ import java.awt.event.ActionListener;
 
 public abstract class Menu extends JPanel {
     protected final TitleLabel title = new TitleLabel();
+    private Color baseColor = new Color(164, 217, 208);
+    private Dimension size = new Dimension(800, 800);
     public Menu(String titleText) {
-        setBackground(new Color(164, 217, 208));
+        setBackground(baseColor);
         title.setText(titleText);
-        setMinimumSize(new Dimension(800, 800));
-        setSize(800, 800);
-        System.out.println(title.getX());
-
+        setMinimumSize(size);
+        setSize(size);
     }
     protected void setActionToButton(ActionListener newAction, JButton btn) {
         if (newAction != null) {
@@ -23,6 +23,11 @@ public abstract class Menu extends JPanel {
         if (text != null) {
             title.setText(text);
         } else throw new NullPointerException("Title tried to be set to null");
+    }
+
+
+    public Color getBaseColor() {
+        return this.baseColor;
     }
 
 }

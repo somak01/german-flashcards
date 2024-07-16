@@ -6,13 +6,14 @@ import org.example.MODEL.Word;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameMenu extends Menu{
-    private final JLabel afterSubmitText = new JLabel("Translate the word");
+    private final JLabel infoText = new JLabel("Translate the word");
     private final JTextField answerField = new JTextField();
-    private final JLabel wordToBeTranslated = new JLabel();
+    private final JLabel word = new JLabel();
     private final NextButton nb = new NextButton();
     private final SubmitButton sb = new SubmitButton();
     private final GridBagLayout layout = new GridBagLayout();
@@ -26,56 +27,35 @@ public class GameMenu extends Menu{
     public GameMenu() {
         super("Game");
         setLayout(layout);
-        configureListeners();
-        generaltConstraints();
+        generalConstraints();
         titleConstraints();
         add(title,constraints);
-        wordToBeTranslatedConstraints();
-        add(wordToBeTranslated, constraints);
+        wordConstraints();
+        add(word, constraints);
         answerFieldConstraints();
         answerField.setMinimumSize(new Dimension(100, 50));
         answerField.setPreferredSize(new Dimension(100, 50));
         add(answerField, constraints);
         setAfterSubmitTextConstraints();
-        add(afterSubmitText, constraints);
-        afterSubmitText.setVisible(true);
+        add(infoText, constraints);
+        infoText.setVisible(true);
         nextAndSubmitConstraints();
         add(nb, constraints);
-
         nb.setVisible(false);
         updateTask();
         add(sb, constraints);
     }
 
-    private void setNextListener(ActionListener newAction) {
-        setActionToButton(newAction, nb);
+    public void setNextListener(ActionListener newAction) {
+        nb.addActionListener(newAction);
     }
-    private void setSubmitListener(ActionListener newAction) {
-        setActionToButton(newAction, sb);
+    public void setSubmitListener(ActionListener newAction) {
+
+        sb.addActionListener(newAction);
     }
 
-    private void configureListeners() {
-        setNextListener(e -> {
-            nb.setVisible(false);
-            sb.setVisible(true);
-            updateTask();
-            clearAnswerField();
-            afterSubmitText.setText("Translate the word");
-        });
-        setSubmitListener( e -> {
-            sb.setVisible(false);
-            nb.setVisible(true);
-            if (getAnswer().equals(solution)) {
-                setBackground(correctAnswerColor);
-                afterSubmitText.setText("Correct!");
-            } else {
-                setBackground(mistakeColor);
-                afterSubmitText.setText("The answer is: " + solution);
-            }
-         }
-        );
-    }
-    private void generaltConstraints() {
+
+    private void generalConstraints() {
         constraints.insets = new Insets(50, 100, 50, 100);
     }
     private void titleConstraints() {
@@ -88,7 +68,7 @@ public class GameMenu extends Menu{
         constraints.gridy = 3;
     }
 
-    private void wordToBeTranslatedConstraints() {
+    private void wordConstraints() {
         constraints.gridy = 1;
         constraints.gridx = 0;
     }
@@ -101,18 +81,42 @@ public class GameMenu extends Menu{
         constraints.gridy = 2;
         constraints.gridx = 1;
     }
-    private String getAnswer() {
+    public String getAnswer() {
         return answerField.getText();
     }
     private void updateTask() {
         if (wit.hasNext()) {
             Word word = wit.next();
             solution = word.getHungarian();
-            wordToBeTranslated.setText(word.getGerman());
+            this.word.setText(word.getGerman());
         }
     }
-    private void clearAnswerField() {
+    public void setWord(String text) {
+        word.setText(text);
+    }
+    public void setInfoText(String text) {
+        infoText.setText(text);
+    }
+    public void clearAnswerField() {
         answerField.setText("");
     }
+    public void setNextVisible(boolean isVisible) {
+        nb.setVisible(isVisible);
+    }
 
+    public void setSubmitVisible(boolean isVisible) {
+        sb.setVisible(isVisible);
+    }
+
+    public void setBackgroundOnMistake() {
+        setBackground(mistakeColor);
+    }
+
+    public void setBackgroundOnCorrectAnswer() {
+        setBackground(correctAnswerColor);
+    }
+
+    public void setBaseColor() {
+        setBackground(getBaseColor());
+    }
 }
