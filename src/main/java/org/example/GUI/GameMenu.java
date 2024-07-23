@@ -6,6 +6,8 @@ import org.example.MODEL.Word;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +22,9 @@ public class GameMenu extends Menu{
     private final GridBagConstraints constraints = new GridBagConstraints();
     private final List<Word> wordList = WordSet.getAdjektiv();
     private final Iterator<Word> wit = wordList.iterator();
-    private String solution;
     private final Color correctAnswerColor = new Color(100, 237, 198);
     private final Color mistakeColor = new Color(237, 100, 113);
+    private final Dimension prefferedAndMinSize = new Dimension(100, 50);
 
     public GameMenu() {
         super("Game");
@@ -32,9 +34,11 @@ public class GameMenu extends Menu{
         add(title,constraints);
         wordConstraints();
         add(word, constraints);
+        word.setMinimumSize(prefferedAndMinSize);
+        word.setPreferredSize(prefferedAndMinSize);
         answerFieldConstraints();
-        answerField.setMinimumSize(new Dimension(100, 50));
-        answerField.setPreferredSize(new Dimension(100, 50));
+        answerField.setMinimumSize(prefferedAndMinSize);
+        answerField.setPreferredSize(prefferedAndMinSize);
         add(answerField, constraints);
         setAfterSubmitTextConstraints();
         add(infoText, constraints);
@@ -42,8 +46,10 @@ public class GameMenu extends Menu{
         nextAndSubmitConstraints();
         add(nb, constraints);
         nb.setVisible(false);
-        updateTask();
+        //updateTask();
         add(sb, constraints);
+        optionPane.setVisible(true);
+        add(optionPane);
     }
 
     public void setNextListener(ActionListener newAction) {
@@ -84,13 +90,14 @@ public class GameMenu extends Menu{
     public String getAnswer() {
         return answerField.getText();
     }
-    private void updateTask() {
-        if (wit.hasNext()) {
-            Word word = wit.next();
-            solution = word.getHungarian();
-            this.word.setText(word.getGerman());
-        }
-    }
+    //older ideas
+//    private void updateTask() {
+//        if (wit.hasNext()) {
+//            Word word = wit.next();
+//            solution = word.getHungarian();
+//            this.word.setText(word.getGerman());
+//        }
+//    }
     public void setWord(String text) {
         word.setText(text);
     }
@@ -107,7 +114,12 @@ public class GameMenu extends Menu{
     public void setSubmitVisible(boolean isVisible) {
         sb.setVisible(isVisible);
     }
-
+    public boolean getNextVisibility() {
+        return nb.isVisible();
+    }
+    public boolean getSubmitVisibility() {
+        return sb.isVisible();
+    }
     public void setBackgroundOnMistake() {
         setBackground(mistakeColor);
     }
@@ -118,5 +130,12 @@ public class GameMenu extends Menu{
 
     public void setBaseColor() {
         setBackground(getBaseColor());
+    }
+    public void doClickFromOutside() {
+        if (nb.isVisible()) {
+            nb.doClick();
+        } else if (sb.isVisible()) {
+            sb.doClick();
+        }
     }
 }
