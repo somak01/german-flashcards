@@ -5,6 +5,11 @@ import org.example.GUI.EndingScreen;
 import org.example.GUI.GameMenu;
 import org.example.GUI.MainMenu;
 import org.example.GUI.SettingsMenu;
+import org.example.MODEL.NonExistentWordTypeException;
+import org.example.MODEL.Word;
+import org.example.MODEL.WordType;
+
+import java.util.List;
 
 public class Kontroller {
     private MainMenu main;
@@ -19,19 +24,38 @@ public class Kontroller {
             this.game = game;
             this.settings = settings;
             this.endingScreen = endingScreen;
-            gc = new GameController(game, WordSet.getAdjektiv());
+            gc = new GameController(game);
         } else throw new NullPointerException("One of Kontroller's argument is null");
     }
 
     public void configure() {
         main.setExitListener(e -> System.exit(0));
-        main.setPlayListener(e -> {main.setVisible(false);game.setVisible(true);});
+        main.setPlayListener(e -> {main.setVisible(false);game.setVisible(true);settings.getWordType();setWordSet();gc.setStartingState();});
         main.setSettingsListener(e -> {main.setVisible(false);settings.setVisible(true);});
         settings.setBackBtnActionListener(e -> {settings.setVisible(false);main.setVisible(true);});
         game.setFinishButtonListener(e -> {endingScreen.setVisible(true);endingScreen.setResultText(gc.getResultsAsString());game.setVisible(false);});
         endingScreen.setRestartListener(e -> {endingScreen.setVisible(false);game.setVisible(true); gc.setStartingState();});
         endingScreen.setOkButtonActionListener(e -> {endingScreen.setVisible(false);main.setVisible(true);});
     }
+
+    public void setWordSet() {
+        switch (settings.getWordType()) {
+            case "Default":
+                gc.setWords(WordSet.getEveryType());
+                break;
+            default:
+                try {
+                    gc.setWords(WordSet.getType(WordType.of(settings.getWordType())));
+                    System.out.println("Itt vagyunk?");
+                } catch (NonExistentWordTypeException nonExp) {
+                    System.out.println("Valami baj van a szo tipusokkal, igy foneveke allitom");
+                    System.out.println("Esetleg itt?");
+                    gc.setWords(WordSet.getSubtantiv());
+                }
+        }
+    }
+
+
 
 
 }

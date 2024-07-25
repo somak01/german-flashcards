@@ -26,6 +26,5 @@ public class ContentPanel extends JPanel {
         cLayout.show(this, "main");
         cLayout.show(this, "title");
         setVisible(true);
-
     }
 }

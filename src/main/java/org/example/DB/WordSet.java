@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class WordSet {
@@ -38,7 +39,7 @@ public class WordSet {
         System.out.println(WordType.ARTIKEL.getType());
         return getType(WordType.ARTIKEL);
     }
-    private static List<Word> getType(WordType type) {
+    public static List<Word> getType(WordType type) {
         try {
             List<Word> ret = new ArrayList<>();
             ResultSet result = stmt.executeQuery(String.format("""
@@ -61,7 +62,30 @@ public class WordSet {
             return null;
         }
     }
-
+    public static List<Word> getEveryType() {
+        try {
+            List<Word> res = new LinkedList<>();
+            ResultSet resultSet = stmt.executeQuery("""
+                    SELECT * FROM words w
+                    LEFT JOIN word_types wt
+                    ON w.word_type_id = wt.id
+                    LEFT JOIN themes th
+                    ON w.theme_id = th.id;"""
+            );
+            while (resultSet.next()) {
+                res.add(new Word(resultSet.getInt("id"),
+                        resultSet.getString("german"),
+                        resultSet.getString("hungarian"),
+                        resultSet.getString("theme_name"),
+                        resultSet.getString("type_name")));
+            }
+            return res;
+        } catch (SQLException exp) {
+            System.out.println("Error with the sql connection or the statement");
+            System.out.println(exp.getMessage());
+            return null;
+        }
+    }
     public static void main(String[] args) {
         List<Word> verbs = WordSet.getVerbs();
         System.out.println(verbs);

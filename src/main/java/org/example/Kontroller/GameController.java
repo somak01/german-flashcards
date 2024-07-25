@@ -21,20 +21,23 @@ public class GameController {
     private Word currentWord;
     private int correctAnswers = 0;
 
-    GameController(GameMenu gm, List<Word> words) {
+    GameController(GameMenu gm) {
         this.gm = gm;
-        this.words = words;
-        wordsIter = words.iterator();
         gm.setNextListener(nextListener());
         gm.setSubmitListener(submitListener());
-        setUpCurrentCard();
         setKeyBindings();
         createAndSetupKeyListenerFromGame();
+    }
+
+    public void setWords(List<Word> words) {
+        if (words != null) {
+            this.words = words;
+            wordsIter = words.iterator();
+        } else throw new NullPointerException();
     }
     public void setStartingState() {
         Collections.shuffle(words);
         wordsIter = words.iterator();
-        updateTask();
         setUpCurrentCard();
         correctAnswers = 0;
         gm.setSubmitVisible(true);
@@ -59,19 +62,20 @@ public class GameController {
         return e -> {
 
             gm.setSubmitVisible(false);
-            if (wordsIter.hasNext()) {
-                gm.setNextVisible(true);
-            } else {
-                gm.setFinishVisible(true);
-            }
             if (checkAnswer()) {
-                correctAnswers++;
+                ++correctAnswers;
                 gm.setBackgroundOnCorrectAnswer();
                 gm.setInfoText("Correct Answer!");
             } else {
                 gm.setBackgroundOnMistake();
                 gm.setInfoText("It should be: " + currentWord.getHungarian());
             }
+            if (wordsIter.hasNext()) {
+                gm.setNextVisible(true);
+            } else {
+                gm.setFinishVisible(true);
+            }
+
 
         };
     }
@@ -93,8 +97,6 @@ public class GameController {
             }
         });
 
-    }
-    public void configureButtons() {
     }
     public void createAndSetupKeyListenerFromGame() {
         gm.addKeyListener(new KeyListener() {
@@ -132,6 +134,7 @@ public class GameController {
 
     public String getResultsAsString() {
         StringBuilder sb = new StringBuilder();
+        System.out.println(words.size());
         sb.append("The result is: ").append(correctAnswers).append("/").append(words.size());
         return sb.toString();
     }

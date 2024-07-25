@@ -25,7 +25,7 @@ public class GameMenu extends Menu{
     private final Iterator<Word> wit = wordList.iterator();
     private final Color correctAnswerColor = new Color(100, 237, 198);
     private final Color mistakeColor = new Color(237, 100, 113);
-    private final Dimension prefferedAndMinSize = new Dimension(100, 50);
+    private final Dimension prefferedAndMinSize = new Dimension(140, 50);
 
     public GameMenu() {
         super("Game");
