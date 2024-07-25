@@ -18,6 +18,7 @@ public class GameMenu extends Menu{
     private final JLabel word = new JLabel();
     private final NextButton nb = new NextButton();
     private final SubmitButton sb = new SubmitButton();
+    private final JButton finishButton = new JButton("Finish");
     private final GridBagLayout layout = new GridBagLayout();
     private final GridBagConstraints constraints = new GridBagConstraints();
     private final List<Word> wordList = WordSet.getAdjektiv();
@@ -46,10 +47,9 @@ public class GameMenu extends Menu{
         nextAndSubmitConstraints();
         add(nb, constraints);
         nb.setVisible(false);
-        //updateTask();
+        add(finishButton, constraints);
+        finishButton.setVisible(false);
         add(sb, constraints);
-        optionPane.setVisible(true);
-        add(optionPane);
     }
 
     public void setNextListener(ActionListener newAction) {
@@ -120,6 +120,12 @@ public class GameMenu extends Menu{
     public boolean getSubmitVisibility() {
         return sb.isVisible();
     }
+    public void setFinishVisible(boolean isVisible) {
+        finishButton.setVisible(isVisible);
+    }
+    public boolean getFinishButtonVisibility() {
+        return finishButton.isVisible();
+    }
     public void setBackgroundOnMistake() {
         setBackground(mistakeColor);
     }
@@ -136,6 +142,14 @@ public class GameMenu extends Menu{
             nb.doClick();
         } else if (sb.isVisible()) {
             sb.doClick();
+        } else if (finishButton.isVisible()) {
+            finishButton.doClick();
         }
     }
+    public void setFinishButtonListener(ActionListener newAction) {
+        if (newAction != null) {
+            finishButton.addActionListener(newAction);
+        } else throw new NullPointerException();
+    }
+
 }

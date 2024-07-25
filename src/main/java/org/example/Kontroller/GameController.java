@@ -9,15 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class GameController {
     private final String info = "Translate the word!";
     private final GameMenu gm;
-    private final List<Word> words;
-    private final Iterator<Word> wordsIter;
+    private List<Word> words;
+    private Iterator<Word> wordsIter;
     private Word currentWord;
+    private int correctAnswers = 0;
 
     GameController(GameMenu gm, List<Word> words) {
         this.gm = gm;
@@ -28,6 +30,18 @@ public class GameController {
         setUpCurrentCard();
         setKeyBindings();
         createAndSetupKeyListenerFromGame();
+    }
+    public void setStartingState() {
+        Collections.shuffle(words);
+        wordsIter = words.iterator();
+        updateTask();
+        setUpCurrentCard();
+        correctAnswers = 0;
+        gm.setSubmitVisible(true);
+        gm.setNextVisible(false);
+        gm.setFinishVisible(false);
+        gm.setBaseColor();
+        gm.setInfoText(info);
     }
     private ActionListener nextListener() {
         return e -> {
@@ -43,9 +57,15 @@ public class GameController {
 
     private ActionListener submitListener() {
         return e -> {
+
             gm.setSubmitVisible(false);
-            gm.setNextVisible(true);
+            if (wordsIter.hasNext()) {
+                gm.setNextVisible(true);
+            } else {
+                gm.setFinishVisible(true);
+            }
             if (checkAnswer()) {
+                correctAnswers++;
                 gm.setBackgroundOnCorrectAnswer();
                 gm.setInfoText("Correct Answer!");
             } else {
@@ -108,5 +128,11 @@ public class GameController {
         updateTask();
         gm.setWord(currentWord.getGerman());
         gm.clearAnswerField();
+    }
+
+    public String getResultsAsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("The result is: ").append(correctAnswers).append("/").append(words.size());
+        return sb.toString();
     }
 }

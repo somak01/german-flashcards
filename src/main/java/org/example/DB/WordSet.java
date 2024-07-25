@@ -34,6 +34,8 @@ public class WordSet {
         return getType(WordType.ADJEKTIV);
     }
     public static List<Word> getArtikel() {
+        System.out.println(getType(WordType.ARTIKEL));
+        System.out.println(WordType.ARTIKEL.getType());
         return getType(WordType.ARTIKEL);
     }
     private static List<Word> getType(WordType type) {
