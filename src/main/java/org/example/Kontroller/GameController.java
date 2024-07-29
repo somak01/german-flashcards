@@ -20,6 +20,7 @@ public class GameController {
     private Iterator<Word> wordsIter;
     private Word currentWord;
     private int correctAnswers = 0;
+    private boolean isGermanToHungarian = true;
 
     GameController(GameMenu gm) {
         this.gm = gm;
@@ -39,6 +40,7 @@ public class GameController {
         Collections.shuffle(words);
         wordsIter = words.iterator();
         setUpCurrentCard();
+        System.out.println(isGermanToHungarian);
         correctAnswers = 0;
         gm.setSubmitVisible(true);
         gm.setNextVisible(false);
@@ -68,7 +70,11 @@ public class GameController {
                 gm.setInfoText("Correct Answer!");
             } else {
                 gm.setBackgroundOnMistake();
-                gm.setInfoText("It should be: " + currentWord.getHungarian());
+                if (isGermanToHungarian) {
+                    gm.setInfoText("It should be: " + currentWord.getHungarian());
+                } else {
+                    gm.setInfoText("It should be: " + currentWord.getGerman());
+                }
             }
             if (wordsIter.hasNext()) {
                 gm.setNextVisible(true);
@@ -79,8 +85,16 @@ public class GameController {
 
         };
     }
+    public void setGermanToHungarian(boolean flag) {
+        isGermanToHungarian = flag;
+        System.out.println(isGermanToHungarian);
+    }
     public boolean checkAnswer() {
-        return currentWord.getHungarian().equals(gm.getAnswer());
+        if (isGermanToHungarian) {
+            return currentWord.getHungarian().equals(gm.getAnswer());
+        } else {
+            return currentWord.getGerman().equals(gm.getAnswer());
+        }
     }
     private void setKeyBindings() {
         ActionMap actionMap = gm.getActionMap();
@@ -128,7 +142,12 @@ public class GameController {
 
     private void setUpCurrentCard() {
         updateTask();
-        gm.setWord(currentWord.getGerman());
+        System.out.println("German to hungarian is currently : " + isGermanToHungarian);
+        if (isGermanToHungarian) {
+            gm.setWord(currentWord.getGerman());
+        } else {
+            gm.setWord(currentWord.getHungarian());
+        }
         gm.clearAnswerField();
     }
 

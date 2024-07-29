@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -88,6 +89,26 @@ public class WordSet {
     }
     public static void main(String[] args) {
         List<Word> verbs = WordSet.getVerbs();
-        System.out.println(verbs);
+        System.out.println(Arrays.toString(WordSet.lektionNums()));
+    }
+
+    public static String[] lektionNums() {
+        try {
+            List<String> tmp = new LinkedList<>();
+            ResultSet rs = stmt.executeQuery("""
+                    SELECT DISTINCT lektion_num FROM words;
+                    """);
+
+            /* 0 is included, because that will be the default value, in this case 0 means all*/
+            while (rs.next()) {
+                tmp.add(rs.getString("lektion_num") == null ? "0" : rs.getString("lektion_num"));
+            }
+            return tmp.toArray(String[]::new);
+
+        } catch (SQLException sqle) {
+            System.out.println("Error with the sql conncetion or the statement in lektionNums function of WordSet");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
     }
 }

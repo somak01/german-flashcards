@@ -30,7 +30,7 @@ public class Kontroller {
 
     public void configure() {
         main.setExitListener(e -> System.exit(0));
-        main.setPlayListener(e -> {main.setVisible(false);game.setVisible(true);settings.getWordType();setWordSet();gc.setStartingState();});
+        main.setPlayListener(e -> {main.setVisible(false);game.setVisible(true);setWordSet();gc.setGermanToHungarian(settings.isGermanToHungarian());gc.setStartingState();});
         main.setSettingsListener(e -> {main.setVisible(false);settings.setVisible(true);});
         settings.setBackBtnActionListener(e -> {settings.setVisible(false);main.setVisible(true);});
         game.setFinishButtonListener(e -> {endingScreen.setVisible(true);endingScreen.setResultText(gc.getResultsAsString());game.setVisible(false);});
