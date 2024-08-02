@@ -91,9 +91,9 @@ public class GameController {
     }
     public boolean checkAnswer() {
         if (isGermanToHungarian) {
-            return currentWord.getHungarian().equals(gm.getAnswer());
+            return  !gm.getAnswer().isEmpty() && (currentWord.getHungarian().equalsIgnoreCase(gm.getAnswer()) || currentWord.getHungarian().contains(gm.getAnswer()));
         } else {
-            return currentWord.getGerman().equals(gm.getAnswer());
+            return !gm.getAnswer().isEmpty() && (currentWord.getGerman().equalsIgnoreCase(gm.getAnswer()));
         }
     }
     private void setKeyBindings() {

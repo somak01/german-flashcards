@@ -66,6 +66,10 @@ public class SettingsMenu extends Menu{
         return (String) wordTypeCombo.getSelectedItem();
     }
 
+    public String getLektionNum() {
+        return (String)lektion.getSelectedItem();
+    }
+
     private static String[] setOptions() {
         List<String> list =  new LinkedList<>();
         list.add("Default");

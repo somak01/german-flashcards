@@ -9,11 +9,12 @@ public class EndingScreen extends JOptionPane {
     private final JButton restartButton = new JButton("Restart");
     private final JLabel result = new JLabel();
     public EndingScreen() {
-        add(panel);
-        panel.add(result);
-        panel.add(okButton);
-        panel.add(restartButton);
         setSize(500, 500);
+        this.add(result);
+        this.setOptions(new Object[] {okButton, restartButton});
+
+
+
     }
     private void setListenerToButton(ActionListener newAction, JButton button) {
         if (newAction != null) {
@@ -24,7 +25,7 @@ public class EndingScreen extends JOptionPane {
         setListenerToButton(newAction, restartButton);
     }
     public void setResultText(String text) {
-        result.setText(text);
+        setMessage(text);
     }
 
     public void setOkButtonActionListener(ActionListener newAction) {

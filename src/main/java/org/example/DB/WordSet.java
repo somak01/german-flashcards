@@ -90,18 +90,49 @@ public class WordSet {
     public static void main(String[] args) {
         List<Word> verbs = WordSet.getVerbs();
         System.out.println(Arrays.toString(WordSet.lektionNums()));
+        List<Word> test = WordSet.getWordsBasedOnSettings("0", "Default");
+        System.out.println(test);
     }
-
+    public static List<Word> getWordsBasedOnSettings(String lektion_num, String wordType) {
+        try {
+            List<Word> res = new LinkedList<>();
+            System.out.println(wordType);
+            ResultSet rs = stmt.executeQuery("""
+                    SELECT * FROM words w
+                    LEFT JOIN word_types wt
+                    ON w.word_type_id = wt.id
+                    LEFT JOIN themes th
+                    ON w.theme_id = th.id
+                    WHERE wt.type_name LIKE '%s' %s;""".formatted(wordType.equals("Default") ? "%" : wordType,
+                                                    lektion_num.equals("0") ? "" : String.format("AND lektion_num = %s", lektion_num)));
+            while (rs.next()) {
+                res.add(new Word(rs.getInt("id"),
+                        rs.getString("german"),
+                        rs.getString("hungarian"),
+                        rs.getString("theme_name"),
+                        rs.getString("type_name")));
+            }
+            return res;
+        } catch (SQLException sqle) {
+            System.out.println("Something wrong with the sql query or connection in getWordsBasedOnSettings");
+            System.out.println(sqle.getMessage());
+            return null;
+        }
+    }
     public static String[] lektionNums() {
         try {
             List<String> tmp = new LinkedList<>();
+            tmp.add("0");
             ResultSet rs = stmt.executeQuery("""
-                    SELECT DISTINCT lektion_num FROM words;
+                    SELECT DISTINCT lektion_num FROM words
+                    ORDER BY lektion_NUM ASC;
                     """);
 
             /* 0 is included, because that will be the default value, in this case 0 means all*/
             while (rs.next()) {
-                tmp.add(rs.getString("lektion_num") == null ? "0" : rs.getString("lektion_num"));
+                if (rs.getString("lektion_num") != null) {
+                    tmp.add(rs.getString("lektion_num"));
+                }
             }
             return tmp.toArray(String[]::new);
 

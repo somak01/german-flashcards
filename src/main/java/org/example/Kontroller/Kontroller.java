@@ -39,20 +39,7 @@ public class Kontroller {
     }
 
     public void setWordSet() {
-        switch (settings.getWordType()) {
-            case "Default":
-                gc.setWords(WordSet.getEveryType());
-                break;
-            default:
-                try {
-                    gc.setWords(WordSet.getType(WordType.of(settings.getWordType())));
-                    System.out.println("Itt vagyunk?");
-                } catch (NonExistentWordTypeException nonExp) {
-                    System.out.println("Valami baj van a szo tipusokkal, igy foneveke allitom");
-                    System.out.println("Esetleg itt?");
-                    gc.setWords(WordSet.getSubtantiv());
-                }
-        }
+       gc.setWords(WordSet.getWordsBasedOnSettings(settings.getLektionNum(), settings.getWordType()));
     }
 
 
