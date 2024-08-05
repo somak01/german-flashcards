@@ -19,6 +19,7 @@ public class GameMenu extends Menu{
     private final NextButton nb = new NextButton();
     private final SubmitButton sb = new SubmitButton();
     private final JButton finishButton = new JButton("Finish");
+    private final JButton exit = new JButton("Exit");
     private final GridBagLayout layout = new GridBagLayout();
     private final GridBagConstraints constraints = new GridBagConstraints();
     private final List<Word> wordList = WordSet.getAdjektiv();
@@ -50,6 +51,9 @@ public class GameMenu extends Menu{
         add(finishButton, constraints);
         finishButton.setVisible(false);
         add(sb, constraints);
+        setExitButtonConstraints();
+        add(exit, constraints);
+        exit.setVisible(true);
     }
 
     public void setNextListener(ActionListener newAction) {
@@ -85,6 +89,10 @@ public class GameMenu extends Menu{
     }
     private void setAfterSubmitTextConstraints() {
         constraints.gridy = 2;
+        constraints.gridx = 1;
+    }
+    private void setExitButtonConstraints() {
+        constraints.gridy = 4;
         constraints.gridx = 1;
     }
     public String getAnswer() {
@@ -129,7 +137,16 @@ public class GameMenu extends Menu{
     public void setBackgroundOnMistake() {
         setBackground(mistakeColor);
     }
-
+    public void setExitVisibility(boolean isVisible) {
+        exit.setVisible(isVisible);
+    }
+    public void setExitActionListener(ActionListener action) {
+        if (action != null) {
+            exit.addActionListener(action);
+        } else {
+            throw new NullPointerException();
+        }
+    }
     public void setBackgroundOnCorrectAnswer() {
         setBackground(correctAnswerColor);
     }

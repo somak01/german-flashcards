@@ -36,6 +36,7 @@ public class Kontroller {
         game.setFinishButtonListener(e -> {endingScreen.setVisible(true);endingScreen.setResultText(gc.getResultsAsString());game.setVisible(false);});
         endingScreen.setRestartListener(e -> {endingScreen.setVisible(false);game.setVisible(true); gc.setStartingState();});
         endingScreen.setOkButtonActionListener(e -> {endingScreen.setVisible(false);main.setVisible(true);});
+        game.setExitActionListener(e -> {game.setVisible(false); main.setVisible(true);});
     }
 
     public void setWordSet() {

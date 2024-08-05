@@ -8,11 +8,16 @@ public abstract class Menu extends JPanel {
     protected final TitleLabel title = new TitleLabel();
     private Color baseColor = new Color(164, 217, 208);
     private Dimension size = new Dimension(800, 800);
+    Font font = getFont();
+    Font sized = font.deriveFont(22f);
+
+
     public Menu(String titleText) {
         setBackground(baseColor);
         title.setText(titleText);
         setMinimumSize(size);
         setSize(size);
+        setFont(sized);
     }
     protected void setActionToButton(ActionListener newAction, JButton btn) {
         if (newAction != null) {

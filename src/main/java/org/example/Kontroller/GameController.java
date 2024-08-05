@@ -80,6 +80,7 @@ public class GameController {
                 gm.setNextVisible(true);
             } else {
                 gm.setFinishVisible(true);
+                gm.setExitVisibility(false);
             }
 
 
