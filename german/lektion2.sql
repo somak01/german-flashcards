@@ -1,3 +1,8 @@
+DELETE FROM words
+WHERE lektion_num = 2;
+
+
+
 INSERT INTO WORDS(german, hungarian, word_type_id, lektion_num)
 VALUES ('sofort', 'azonnal', 4, 2), ('das Café-s', 'kávézó', 0, 2),('diskutieren', 'diskurálni', 1, 2), ('der Ausländer-', 'külföldi',0, 2), ('trinken', 'inni', 1, 2), ('der Tee-s', 'tea', 0, 2), ('der Kaffee-s', 'kávé', 0, 2), ('Guten Tag!', 'Jó napot!', 10, 2), 
 ('Entschuldigung!', 'Elnézést!', 10, 2), ('der Platz-:e', 'hely', 0, 2), ('hier', 'itt', 4, 2), ('frei', 'szabad', 3, 2), ('Wie?', 'Hogy? Hogyan? Milyen?', 4,2), ('also', 'tehát', 4, 2), ('noch einmal', 'mégegyszer', 10, 2), ('verstehen', 'megérteni', 1, 2), ('nichts', 'semmi', 2, 2), ('der Lärm', 'lárma', 0, 2), ('so', 'olyan,annyira, úgy', 7, 2), ('taub', 'süket', 3, 2), ('Arabien', 'Arábia', 0, 2), ('genau', 'pontosan', 3, 2), ('der Gastarbeiter-', 'vendégmunkás', 0, 2), ('der Elektrotechniker-', 'elektrotechnikus', 0, 2), ('bei', '-nál, -nél', 6, 2), ('Woher?', 'Honnan?', 4, 2), ('Was?', 'Mi?', 4, 2), ('machen', 'csinálni', 1, 2), ('arbeiten', 'dolgozni', 1, 2), ('als', 'mint, -ként', 7, 2), ('der Vater-:', 'apa', 0, 2), ('auch', 'is, szintén', 4, 2), ('der Ingenieur-e', 'mérnök', 0, 2), ('der Großvater-:', 'nagyapa', 0, 2), ('der Urgroßvater-:', 'dédapa', 0, 2), ('ebenso', 'ugyanúgy', 4, 2), ('nur', 'csak',4, 2), ('der Leichenbestatter-', 'temetkezésivállalkozó', 0, 2),
