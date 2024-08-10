@@ -26,7 +26,7 @@ public class GameMenu extends Menu{
     private final Iterator<Word> wit = wordList.iterator();
     private final Color correctAnswerColor = new Color(100, 237, 198);
     private final Color mistakeColor = new Color(237, 100, 113);
-    private final Dimension prefferedAndMinSize = new Dimension(140, 50);
+    private final Dimension prefferedAndMinSize = new Dimension(400, 50);
 
     public GameMenu() {
         super("Game");
@@ -36,8 +36,6 @@ public class GameMenu extends Menu{
         add(title,constraints);
         wordConstraints();
         add(word, constraints);
-        word.setMinimumSize(prefferedAndMinSize);
-        word.setPreferredSize(prefferedAndMinSize);
         answerFieldConstraints();
         answerField.setMinimumSize(prefferedAndMinSize);
         answerField.setPreferredSize(prefferedAndMinSize);
@@ -75,24 +73,24 @@ public class GameMenu extends Menu{
 
     private void nextAndSubmitConstraints() {
         constraints.gridx = 1;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
     }
 
     private void wordConstraints() {
         constraints.gridy = 1;
-        constraints.gridx = 0;
+        constraints.gridx = 1;
     }
 
     private void answerFieldConstraints() {
-        constraints.gridy = 1;
-        constraints.gridx = 2;
-    }
-    private void setAfterSubmitTextConstraints() {
         constraints.gridy = 2;
         constraints.gridx = 1;
     }
+    private void setAfterSubmitTextConstraints() {
+        constraints.gridy = 3;
+        constraints.gridx = 1;
+    }
     private void setExitButtonConstraints() {
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         constraints.gridx = 1;
     }
     public String getAnswer() {
