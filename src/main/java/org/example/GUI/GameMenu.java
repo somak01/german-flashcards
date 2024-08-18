@@ -24,12 +24,18 @@ public class GameMenu extends Menu{
     private final GridBagConstraints constraints = new GridBagConstraints();
     private final List<Word> wordList = WordSet.getAdjektiv();
     private final Iterator<Word> wit = wordList.iterator();
+
     private final Color correctAnswerColor = new Color(100, 237, 198);
     private final Color mistakeColor = new Color(237, 100, 113);
     private final Dimension prefferedAndMinSize = new Dimension(400, 50);
 
     public GameMenu() {
+
         super("Game");
+        Font ft = word.getFont();
+        Font ft1 = ft.deriveFont(18.0f);
+        word.setFont(ft1);
+        answerField.setFont(ft1);
         setLayout(layout);
         generalConstraints();
         titleConstraints();
